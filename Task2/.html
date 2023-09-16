@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Background Color Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            transition: background-color 0.5s;
+        }
+
+        #color-code {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Random Background Color Generator</h1>
+    <div>
+        <button id="generate-color">Generate Random Color</button>
+    </div>
+    <div>
+        <p id="color-code">Color Code: #FFFFFF</p>
+        <button id="copy-button">Copy Color Code</button>
+    </div>
+
+    <script>
+        function generateRandomColor() {
+            const letters = "0123456789ABCDEF";
+            let color = "#";
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        const generateColorButton = document.getElementById("generate-color");
+        const colorCodeText = document.getElementById("color-code");
+        const copyButton = document.getElementById("copy-button");
+
+        generateColorButton.addEventListener("click", () => {
+            const randomColor = generateRandomColor();
+            document.body.style.backgroundColor = randomColor;
+            colorCodeText.innerText = `Color Code: ${randomColor}`;
+        });
+
+        copyButton.addEventListener("click", () => {
+            const colorCode = colorCodeText.innerText.split(": ")[1];
+            const dummyInput = document.createElement("input");
+            document.body.appendChild(dummyInput);
+            dummyInput.setAttribute("value", colorCode);
+            dummyInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummyInput);
+            alert(`Copied: ${colorCode}`);
+        });
+    </script>
+</body>
+</html>
